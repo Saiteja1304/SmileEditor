@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "gdb",
             "request": "launch",
-            "target": "./build/SmileEditor",
+            "target": "./SmileEditor",
             "cwd": "${workspaceRoot}",
             "valuesFormatting": "parseText"
         }
