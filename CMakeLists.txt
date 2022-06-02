@@ -12,8 +12,12 @@ FetchContent_MakeAvailable(Smile)
 file(GLOB SRC src/*.cpp src/*.c)
 file(GLOB INCLUDE include/*.hpp include/../*.hpp)
 
+
 add_executable(${PROJECT_NAME} SmileEditor.cpp
 ${SRC} ${INCLUDE})
+
+target_compile_options(${PROJECT_NAME} PRIVATE 
+-Wall)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY})
 

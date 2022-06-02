@@ -17,7 +17,7 @@ void FileManager::__DeleteDuplicates() {
 
 void FileManager::SearchSharedObjects() {
     SharedObjects.clear();
-    dr = opendir(FMEditor->SOLoc.c_str());
+    dr = opendir((FMEditor.SOLoc).c_str());
     if (dr) {
         while ((entity = readdir(dr)) != NULL) {
             if ((int)(entity->d_type) == 8) {

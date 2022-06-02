@@ -6,10 +6,8 @@ class Editor {
     std::string ProjectRootLoc;
     std::string ScriptsLoc;
     std::string SOLoc;
-    static Editor *EInstance;
-    static Editor *EGetInstance() {
-        if (!EInstance)
-            EInstance = new Editor;
+    static Editor &EGetInstance() {
+        static Editor EInstance;
         return EInstance;
     }
     void PreInit();
@@ -24,7 +22,8 @@ class Editor {
 
   private:
     Editor() {}
-    ~Editor() {}
+    Editor(Editor const &);
+    void operator=(Editor const &);
 };
 
 #endif
