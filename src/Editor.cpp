@@ -1,18 +1,15 @@
 #include "Core/Input.hpp"
-#include "DynamicScriptLoader.hpp"
 #include "FileManager.hpp"
 #include "Graphics/GL/Graphics.hpp"
 #include "Window/Window.hpp"
 #include <Editor.hpp>
 #include <iostream>
 
-
 // Creating pointers of required classes
 Window *E_window;
 Graphics *E_graphics;
 Input *E_input;
 FileManager *E_filemanager;
-DynamicScriptLoader *E_dynamicSL;
 
 // if true the update functions of scripts will run
 bool isPlaying = false;
@@ -20,17 +17,7 @@ bool isPlaying = false;
 // A input call back funciton
 // give your input code here for only once keycall
 void InputCallBacks(GLFWwindow *window, int key, int scancode, int action,
-                    int mods) {
-    if (key == INPUT_KEY_R && action == INPUT_PRESS) {
-        std::cerr << "R Pressed\n";
-        E_dynamicSL->DSLReload();
-    }
-    if(key == INPUT_KEY_P && action == INPUT_PRESS){
-        // if isplaying is true -> sets to false
-        // if isplaying is false -> sets to true
-        isPlaying = !isPlaying;
-    }
-}
+                    int mods) {}
 
 // called at the start of Editor
 void Editor::PreInit() {
@@ -39,13 +26,9 @@ void Editor::PreInit() {
     E_graphics = E_graphics->GGetInstance();
     E_input = E_input->IGetInstance();
     E_filemanager = E_filemanager->FMGetInstance();
-    E_dynamicSL = E_dynamicSL->DSLGetInstance();
 
     // search for shared objects in the projects scripts/so directory
     E_filemanager->SearchSharedObjects();
-
-    // load found shared objects
-    E_dynamicSL->DSLLoad();
 }
 
 // Actual Editor init
@@ -69,11 +52,11 @@ void Editor::Init() {
 }
 // user level init
 // scripts init function will be called here
-void Editor::PostInit() { E_dynamicSL->DSLRunInit(); }
+void Editor::PostInit() {}
 void Editor::PreStart() {}
 // user level start
 // scripts start function will be called here
-void Editor::Start() { E_dynamicSL->DSLRunStart(); }
+void Editor::Start() {}
 void Editor::PostStart() {}
 
 void Editor::Update() {
@@ -82,15 +65,6 @@ void Editor::Update() {
         if (E_input->IGetKeyDown(INPUT_KEY_ESCAPE)) {
             E_window->WExitWindow();
         }
-    }
-    if(E_dynamicSL->isRecompiled){
-        E_dynamicSL->DSLRunInit();
-        E_dynamicSL->DSLRunStart();
-        E_dynamicSL->isRecompiled = false;
-    }
-    if (isPlaying) {
-        // Runs Scripts update function
-        E_dynamicSL->DSLRunUpdate();
     }
 
     // polling window events
@@ -103,7 +77,7 @@ void Editor::Update() {
 }
 // user level exit
 // scripts exit function will be called here
-void Editor::preExit() { E_dynamicSL->DSLRunExit(); }
+void Editor::preExit() {}
 void Editor::Exit() {
     // destroy window
     E_window->WDestroyWindow();

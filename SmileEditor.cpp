@@ -4,7 +4,7 @@
 #include <Window/Window.hpp>
 // Input Header from Smile Lib
 #include <Core/Input.hpp>
-
+#include <Core/Group.hpp>
 // Smile Editor Main Header
 #include <SmileEditor.hpp>
 
@@ -17,7 +17,7 @@ Window *Window::WInstance = 0;
 Graphics *Graphics::GInstance = 0;
 Input *Input::IInstance = 0;
 FileManager *FileManager::FMInstance = 0;
-DynamicScriptLoader *DynamicScriptLoader::DSLInstance = 0;
+// GroupManager* GroupManager::GMInstance = 0;
 
 int main(int argc, char *argv[]) {
 
