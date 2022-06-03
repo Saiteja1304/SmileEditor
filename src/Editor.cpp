@@ -23,6 +23,9 @@ void InputCallBacks(GLFWwindow *window, int key, int scancode, int action,
                         if(key == INPUT_KEY_P && action == INPUT_PRESS){
                             isPlaying = !isPlaying;
                         }
+                        if(key == INPUT_KEY_R && action == INPUT_PRESS){
+                            E_cscriptmanager.CSMReloadScripts();
+                        }
                     }
 
 // called at the start of Editor
@@ -72,6 +75,11 @@ void Editor::Update() {
     {
         if (isPlaying) {
             E_cscriptmanager.CSMScriptUpdate();
+        }
+        if(E_cscriptmanager.isReCompiled){
+            E_cscriptmanager.CSMScriptInit();
+            E_cscriptmanager.CSMScriptStart();
+            E_cscriptmanager.isReCompiled = false;
         }
     }
     // polling window events

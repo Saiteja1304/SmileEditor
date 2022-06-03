@@ -7,9 +7,12 @@
 #include <Core/Group.hpp>
 #include <Core/Input.hpp>
 // Smile Editor Main Header
+#include <Core/Math/vector4.hpp>
 #include <SmileEditor.hpp>
 
 // std
+#include <bits/chrono.h>
+#include <chrono>
 #include <iostream>
 
 int main(int argc, char *argv[]) {

@@ -2,8 +2,8 @@
 #include <CScriptManager.hpp>
 #include <dlfcn.h>
 #include <iostream>
-void CScriptManager::CSMLoadScripts() {
-    scripts = new struct_scripts[CSM_filemanager.SharedObjects.size()];
+
+void CScriptManager::__loadScripts() {
     for (int i = 0; i < CSM_filemanager.SharedObjects.size(); i++) {
         scripts[i].handle = dlopen(
             (CSM_editor.SOLoc + CSM_filemanager.SharedObjects[i]).c_str(),
@@ -23,6 +23,38 @@ void CScriptManager::CSMLoadScripts() {
         }
     }
 }
+void CScriptManager::__closehandles() {
+    unsigned short int size = CSM_filemanager.SharedObjects.size();
+    for (int i = 0; i < size; i++) {
+        dlclose(scripts->handle);
+    }
+}
+
+void CScriptManager::CSMLoadScripts() {
+    // allocate memory
+    scripts = new struct_scripts[CSM_filemanager.SharedObjects.size()];
+    // call load scripts function
+    __loadScripts();
+}
+
+void CScriptManager::CSMReloadScripts() {
+    // call destructor
+    // close handles
+    __closehandles();
+    // deallocate memory
+    delete[] scripts;
+    // load scripts
+    CSMLoadScripts();
+    isReCompiled = true;
+}
+void CScriptManager::CSMDestroyScripts() {
+    // call destructor
+    // close handles
+    __closehandles();
+    // deallocate memory
+    delete[] scripts;
+}
+
 void CScriptManager::CSMScriptInit() {
     for (int i = 0; i < CSM_filemanager.SharedObjects.size(); i++) {
         scripts[i].script->Init();

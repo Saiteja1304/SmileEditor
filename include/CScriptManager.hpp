@@ -7,12 +7,12 @@ struct struct_scripts {
     CScript *(*GetPtr)();
     void *handle;
     CScript *script;
-    bool isRecompiled = false;
 };
 class CScriptManager {
   public:
     Editor &CSM_editor = CSM_editor.EGetInstance();
     struct_scripts *scripts;
+    bool isReCompiled = false;
     FileManager &CSM_filemanager = CSM_filemanager.FMGetInstance();
     static CScriptManager &CSMGetInstance() {
         static CScriptManager CSMInstance;
@@ -24,11 +24,14 @@ class CScriptManager {
     void CSMScriptStart();
     void CSMScriptUpdate();
     void CSMScriptExit();
+    void CSMDestroyScripts();
 
   private:
     CScriptManager() {}
     CScriptManager(CScriptManager const &);
     void operator=(CScriptManager const &);
+    void __loadScripts();
+    void __closehandles();
 };
 
 #endif
